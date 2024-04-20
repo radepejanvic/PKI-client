@@ -79,7 +79,7 @@ export class LogInComponent {
         next: (response: AuthResponse) => {
           localStorage.setItem('user', response.jwt);
           this.authService.setUser()
-          // this.router.navigate(['home'])
+          this.router.navigate(['cert-requests'])
         },
         error:(error) => {
           if(error.status === 403){

@@ -7,6 +7,9 @@ import {Interceptor} from "./infrastructure/auth/interceptor";
 import { AuthModule } from './infrastructure/auth/auth.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { LayoutModule } from './layout/layout.module';
+import { CertificateModule } from './certificate/certificate.module';
+
 
 @NgModule({
   declarations: [
@@ -17,7 +20,9 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     AuthModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    LayoutModule,
+    CertificateModule
   ],
   providers: [
     {
