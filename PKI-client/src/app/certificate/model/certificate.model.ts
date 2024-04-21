@@ -12,7 +12,7 @@ export class Certificate{
   issuerC?:string;
   issuerE?:string;
   valid:boolean;
-  alias?:string;
+  alias:string;
   certificateType:CertificateType;
   issuerId:number;
 
