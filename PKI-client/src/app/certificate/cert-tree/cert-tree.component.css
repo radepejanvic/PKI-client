@@ -1,29 +1,25 @@
 .split-container {
   display: flex;
   height: 100%;
+  background-color: #F6F8FA;
 }
 
 .left-half, .right-half {
   flex: 1;
   height: 100%;
-  margin: 20px;
-  padding: 20px;
-}
-.left-half{
-  flex: 1;
-  height: 100%;
   margin-right: 20px;
-  margin-top: 40px;
-  margin-bottom: 20px;
   margin-left: 20px;
   padding: 20px;
 }
+
 .example-tree-invisible {
   display: none;
+  background-color: #F6F8FA;
 }
 
 .mat-tree-node{
   position: relative;
+  background-color: #F6F8FA;
 }
 
 .example-tree ul,
@@ -31,6 +27,7 @@
   margin-top: 0;
   margin-bottom: 0;
   list-style-type: none;
+  background-color: #F6F8FA;
 }
 
 /*
@@ -38,6 +35,7 @@
  */
 .example-tree .mat-nested-tree-node div[role=group] {
   padding-left: 40px;
+  background-color: #F6F8FA;
 }
 
 /*
@@ -47,11 +45,13 @@
  */
 .example-tree div[role=group] > .mat-tree-node {
   padding-left: 40px;
+  background-color: #F6F8FA;
 }
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  background-color: #F6F8FA;
 }
 
 .certificate-container {
@@ -107,30 +107,202 @@ body {
 }
 
 .close-button {
+  width: 300px;
+  height: 40px;
+  background-color: #dddddd;
+  border-color: #dddddd;
+  border-width: 0;
+  border-radius: 5px;
+  color: black;
+  font-size: medium;
+}
+
+.close-button:hover {
+  width: 300px;
+  height: 40px;
+  background-color: #ffffff;
+  border-color: #dddddd;
+  border-width: 0;
+  border-radius: 5px;
+  color: black;
+  font-size: medium;
+}
+
+.create-button{
+  margin-left: 20px;
+  width: 60px;
+  height: 30px;
+  background-color: #235471;
+  border-color: #dddddd;
+  border-width: 0;
+  border-radius: 5px;
+  color: white;
+}
+.delete-button{
+  margin-right: 30px;
+  width: 300px;
+  height: 40px;
+  background-color: #cd3535;
+  border-color: #dddddd;
+  border-width: 0;
+  border-radius: 5px;
+  color: white;
+  font-size: medium;
+}
+.archive-button{
+  margin-right: 30px;
+  width: 300px;
+  height: 40px;
+  background-color: #333333;
+  border-color: #dddddd;
+  border-width: 0;
+  border-radius: 5px;
+  color: white;
+  font-size: medium;
+}
+
+.create-button:hover{
+  margin-left: 20px;
+  width: 60px;
+  height: 30px;
+  background-color: #137499;
+  border-color: #dddddd;
+  border-width: 0;
+  color: white;
+}
+.delete-button:hover{
+  margin-right: 30px;
+  width: 300px;
+  height: 40px;
+  background-color: lightcoral;
+  border-color: #dddddd;
+  border-width: 0;
+  color: white;
+  font-size: medium;
+}
+
+.archive-button:hover{
+  margin-right: 30px;
+  width: 300px;
+  height: 40px;
+  background-color: #777777;
+  border-color: #dddddd;
+  border-width: 0;
+  color: white;
+  font-size: medium;
+}
+
+.div-margin{
+  background-color: #F6F8FA;
+  margin-top: 20px;
+}
+.div-margin-buttons{
+  background-color: #F6F8FA;
+  margin-top: 20px;
+  margin-left: 40px;
+}
+
+.certificate-create {
+  margin-top:20px;
+  width: 100%;
+  position: relative;
+  background-color: #F6F8FA;
+}
+
+.close-button-create {
   position: absolute;
-  top: 7%; /* Adjust as needed */
-  left: 60%; /* Adjust as needed */
+  top: -5%;
+  margin-left: 40px;
   height: 30px;
   width: 65px;
   font-size: medium;
 }
 
-.create-button{
-  position: absolute;
-  top: 20%; /* Adjust as needed */
-  left: 250px; /* Adjust as needed */
-  width: 50px;
-  height: 30px;
-  background-color: #2e856e;
-  border-color: #dddddd;
+.save-create {
+  margin-right: 40px !important;
 }
 
-.create-button:hover{
-  position: absolute;
-  top: 20%; /* Adjust as needed */
-  left: 250px; /* Adjust as needed */
-  width: 50px;
-  height: 30px;
-  background-color: #8abaae;
-  border-color: #dddddd;
+#button-create{
+  border:5px black;
+  cursor: pointer;
+  font-size: 14px;
+  background-color: #235471;
+  color: #FFFF;
+  border-radius: 5px;
+  width: 120px;
+  padding: 6px;
+  height: 36px;
+  margin: 15px 0;
+  filter: drop-shadow(0px 0.25px 0px rgba(0, 0, 0, 0.039));
+}
+
+#button-create:hover{
+  border:5px black;
+  cursor: pointer;
+  font-size: 14px;
+  background-color: #137499;
+  color: #FFFF;
+  border-radius: 5px;
+  width: 120px;
+  padding: 6px;
+  height: 36px;
+  margin: 15px 0;
+  filter: drop-shadow(0px 0.25px 0px rgba(0, 0, 0, 0.039));
+}
+
+#button-save{
+  border:5px black;
+  cursor: pointer;
+  font-size: 14px;
+  background-color: #235471;
+  color: #FFFF;
+  border-radius: 5px;
+  width: 120px;
+  padding: 6px;
+  height: 36px;
+  margin: 20px 0;
+  filter: drop-shadow(0px 0.25px 0px rgba(0, 0, 0, 0.039));
+}
+
+#button-save:hover{
+  border:5px black;
+  cursor: pointer;
+  font-size: 14px;
+  background-color: #137499;
+  color: #FFFF;
+  border-radius: 5px;
+  width: 120px;
+  padding: 6px;
+  height: 36px;
+  margin: 20px 0;
+  filter: drop-shadow(0px 0.25px 0px rgba(0, 0, 0, 0.039));
+}
+.text{
+  font-weight: bold;
+  font-size: medium;
+}
+input {
+  background-color: #FFFF;
+  font-size: 14px;
+  border-radius: 5px;
+  width: 200px ;
+  height: 20px;
+  padding: 10px;
+  margin: 10px 0;
+  filter: drop-shadow(6px 7px 7px rgba(0, 0, 0, 0.1));
+}
+.text-issuer{
+  font-weight: bold;
+  font-size: large;
+  margin-top: 20px;
+}
+
+mat-form-field{
+  margin-top: 20px;
+  border-color: black;
+}
+
+.buttons{
+  display: flex !important;
+  margin-top: 15px;
 }

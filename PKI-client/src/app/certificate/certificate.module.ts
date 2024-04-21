@@ -6,6 +6,8 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 import {MatButtonModule} from "@angular/material/button";
 import { CertDetailsComponent } from './cert-details/cert-details.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatSelectModule} from "@angular/material/select";
 
 
 
@@ -19,7 +21,9 @@ import { CertDetailsComponent } from './cert-details/cert-details.component';
     CommonModule,
     MatTreeModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    ReactiveFormsModule,
+    MatSelectModule
   ],
   exports: [
     CertRequestsComponent,

@@ -22,7 +22,7 @@
           <div class="node-name" (click)="onNodeClicked(node)">
             {{node.subject}}
           </div>
-          <button class="create-button" (click)="create(node)">+Add</button>
+          <button class="create-button" (click)="create(node)">Create</button>
         </div>
         <!-- There is inline padding applied to this div using styles.
             This padding value depends on the mat-icon-button width.  -->
@@ -35,7 +35,6 @@
   </div>
   <div class="right-half">
     <div *ngIf="certificateData" class="certificate-details">
-      <button class="close-button" (click)="back()">Close</button>
       <html lang="en">
       <head>
         <meta charset="UTF-8">
@@ -56,6 +55,11 @@
             <br>
             <p><strong>Certificate ID:</strong><br>&nbsp;&nbsp;&nbsp;&nbsp; {{certificateData.id}}</p>
           </div>
+          <div class="buttons">
+            <button class="delete-button" (click)="delete(certificateData)">Delete</button>
+            <button class="archive-button" (click)="archive(certificateData)">Archive</button>
+            <button class="close-button" (click)="back()">Close</button>
+          </div>
         </div>
         <!-- You can add more certificates here -->
       </div>
@@ -63,31 +67,76 @@
       </html>
     </div>
     <!-- CREATE CONTAINER -->
-    <div *ngIf="createBy" class="certificate-details">
-      <button class="close-button" (click)="back2()">Close</button>
-      <html lang="en">
-      <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Web Certificate Display</title>
-        <link rel="stylesheet">
-      </head>
-      <body>
-      <div class="certificate-container">
-        <div class="certificate">
-          <h2>Certificate</h2>
-          <div class="certificate-details">
-            <p><strong>Issued To:</strong><br>&nbsp;&nbsp;&nbsp;&nbsp;</p>
-            <p><strong>Issued By:</strong><br>&nbsp;&nbsp;&nbsp;&nbsp; {{certificateData.subject}}</p>
-            <br>
-            <p><strong>Issued On:</strong><br>&nbsp;&nbsp;&nbsp;&nbsp;</p>
-            <p><strong>Expires On:</strong><br>&nbsp;&nbsp;&nbsp;&nbsp;</p>
+    <div *ngIf="createBy" class="certificate-create">
+      <form [formGroup]="createCertForm" (ngSubmit)="onSubmit()">
+        <div class="split-container">
+          <div class="left-half">
+            <div class="div-margin">
+              <div class="text">
+                Common Name:
+              </div>
+              <input formControlName="subjectCN" type="text" required placeholder="Common Name">
+            </div>
+            <div class="div-margin">
+              <div class="text">
+                Organization:
+              </div>
+              <input formControlName="subjectO" type="text" required placeholder="Organization">
+            </div>
+            <div class="div-margin">
+              <div class="text">
+                Country:
+              </div>
+              <input formControlName="subjectC" type="text" required placeholder="Country">
+            </div>
+            <div class="div-margin">
+              <div class="text">
+                Certificate Type:
+              </div>
+              <mat-form-field *ngIf="createBy.certificateType == CertificateType.SS">
+                <mat-label>Certificate Type:</mat-label>
+                <mat-select formControlName="certType">
+                  <mat-option *ngFor="let type of typesRoot" [value]="type">{{ type }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field *ngIf="createBy.certificateType == CertificateType.CA">
+                <mat-label>Certificate Type:</mat-label>
+                <mat-select formControlName="certType">
+                  <mat-option *ngFor="let type of typesCE" [value]="type">{{ type }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="right-half">
+            <div class="div-margin">
+              <div class="text">
+                Email:
+              </div>
+              <input formControlName="subjectE" type="text" required placeholder="Email">
+            </div>
+            <div class="div-margin">
+              <div class="text">
+                Subject Alias:
+              </div>
+              <input formControlName="organization" type="text" required placeholder="Subject Alias">
+            </div>
+            <div class="div-margin">
+              <div class="text">
+                Issuer Common Name:
+              </div>
+              <div class="text-issuer" [innerText]="createBy.subject">
+                {{createBy.subject}}
+              </div>
+            </div>
           </div>
         </div>
-        <!-- You can add more certificates here -->
-      </div>
-      </body>
-      </html>
+        <div class="div-margin-buttons">
+          <button class="save-create" id="button-save">Save</button>
+          <button class="save-create" type="submit" id="button-create">Create</button>
+          <button class="close-button" (click)="back2()">Close</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

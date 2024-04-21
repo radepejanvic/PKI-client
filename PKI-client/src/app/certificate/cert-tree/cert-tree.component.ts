@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {Certificate} from "../model/certificate.model";
+import {ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
+import {Certificate, CertificateType} from "../model/certificate.model";
 import {CertificateService} from "../service/certificate.service";
-import {Observable} from "rxjs";
 import {CertificateNode} from "../model/certificate-node.nodel";
-import {FlatTreeControl, NestedTreeControl} from "@angular/cdk/tree";
+import {NestedTreeControl} from "@angular/cdk/tree";
 import {MatTreeNestedDataSource} from "@angular/material/tree";
+import {FormBuilder, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-cert-tree',
@@ -19,9 +19,21 @@ export class CertTreeComponent  implements OnInit {
   certificateData!: any;
   createBy!: any;
 
+  typesRoot: CertificateType[] = [CertificateType.CA,CertificateType.EE,CertificateType.SS];
+  typesCE: CertificateType[] = [CertificateType.CA,CertificateType.EE];
+
+  fb = inject(FormBuilder);
+  createCertForm = this.fb.nonNullable.group({
+    subjectE: ['', Validators.required],
+    subjectCN: ['', Validators.required],
+    subjectC: ['', Validators.required],
+    subjectO: ['', Validators.required],
+    certType: ['', Validators.required]
+  });
+
   treeControl: NestedTreeControl<CertificateNode>;
 
-  constructor(private certificateService: CertificateService) {
+  constructor(private certificateService: CertificateService, private cdr: ChangeDetectorRef) {
     this.treeControl = new NestedTreeControl<CertificateNode>(node => node.children);
   }
 
@@ -30,7 +42,7 @@ export class CertTreeComponent  implements OnInit {
   }
 
   loadCertificates(): void {
-    this.certificateService.getAllCertificates1().subscribe(
+    this.certificateService.getAllCertificates().subscribe(
       (data:Certificate[]) => {
         if(data){
           console.log(data);
@@ -91,39 +103,61 @@ export class CertTreeComponent  implements OnInit {
     node.children.forEach(child => {
       this.expandNode(child, isExpanded);
     });
+    this.cdr.detectChanges();
   }
 
   onNodeClicked(node:CertificateNode){
-
+    this.createBy = null;
     this.certificateData = {
       id: node.id,
       subject: node.subject,
     }
+    this.cdr.detectChanges();
   }
   onNodeClickedReal(id:number){
+    this.createBy = null;
     this.certificateService.getCertificateById(id).subscribe(
       (data) => {
         if(data){
           this.certificateData = {
             id: data.id,
-            subject: data.subject,
+            subjectCN: data.subjectCN,
             issuedOn: data.issuedOn,
             expiresOn: data.expiresOn,
             valid: data.valid,
-            issuer: data.issuer
+            issuerId: data.issuerId,
+            subjectC: data.subjectC,
+            subjectE: data.subjectE,
+            subjectO: data.subjectO
           }
         }
-      })
+      });
+    this.cdr.detectChanges();
   }
 
   back(){
-    this.certificateData = null
+    this.certificateData = null;
+    this.cdr.detectChanges();
   }
   back2(){
-    this.createBy = null
+    this.createBy = null;
+    this.cdr.detectChanges();
   }
 
   create(node:CertificateNode){
+    this.certificateData = null;
     this.createBy = node;
+    this.cdr.detectChanges();
   }
+
+  delete(node:CertificateNode){
+
+  }
+  archive(node:CertificateNode){
+
+  }
+
+  onSubmit(): void {}
+
+  protected readonly CertificateType = CertificateType;
 }
