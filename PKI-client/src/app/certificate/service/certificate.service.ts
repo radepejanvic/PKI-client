@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable, of} from "rxjs";
-import {Certificate} from "../model/certificate.model";
+import {Certificate, CertificateType} from "../model/certificate.model";
 import {HttpClient} from "@angular/common/http";
 import {CertificateNode} from "../model/certificate-node.nodel";
 import { environment } from 'src/env/env';
@@ -22,12 +22,12 @@ export class CertificateService {
   // TEST DATA
   getAllCertificates1(): Observable<Certificate[]> {
     const retVal: Certificate[] = [
-      {id: 1, serialNumber: 1, issuedOn: 10, expiresOn: 20, subject: "ROOT", valid: true, issuer: undefined},
-      {id: 2, serialNumber: 1, issuedOn: 10, expiresOn: 20, subject: "CE 1", valid: true, issuer: {id: 1, serialNumber: 1, issuedOn: 10, expiresOn: 20, subject: "string", valid: true, issuer: undefined}},
-      {id: 3, serialNumber: 1, issuedOn: 10, expiresOn: 20, subject: "CE 2", valid: true, issuer: {id: 1, serialNumber: 1, issuedOn: 10, expiresOn: 20, subject: "string", valid: true, issuer: undefined}},
-      {id: 4, serialNumber: 1, issuedOn: 10, expiresOn: 20, subject: "EE 1 1", valid: true, issuer: {id: 2, serialNumber: 1, issuedOn: 10, expiresOn: 20, subject: "CE 1", valid: true, issuer: {id: 1, serialNumber: 1, issuedOn: 10, expiresOn: 20, subject: "string", valid: true, issuer: undefined}}},
-      {id: 5, serialNumber: 1, issuedOn: 10, expiresOn: 20, subject: "EE 1 2", valid: true, issuer: {id: 2, serialNumber: 1, issuedOn: 10, expiresOn: 20, subject: "CE 1", valid: true, issuer: {id: 1, serialNumber: 1, issuedOn: 10, expiresOn: 20, subject: "string", valid: true, issuer: undefined}}},
-      {id: 6, serialNumber: 1, issuedOn: 10, expiresOn: 20, subject: "EE 2 1", valid: true, issuer: {id: 3, serialNumber: 1, issuedOn: 10, expiresOn: 20, subject: "CE 2", valid: true, issuer: {id: 1, serialNumber: 1, issuedOn: 10, expiresOn: 20, subject: "string", valid: true, issuer: undefined}}},
+      {id: 1, serialNumber: 1, issuedOn: 10, expiresOn: 20, subjectCN: "ROOT", valid: true, alias: "", certificateType: CertificateType.SS, issuerId: 0},
+      {id: 2, serialNumber: 1, issuedOn: 10, expiresOn: 20, subjectCN: "CA 1", valid: true, alias: "ROOT", certificateType: CertificateType.CA, issuerId: 1},
+      {id: 3, serialNumber: 1, issuedOn: 10, expiresOn: 20, subjectCN: "CA 2", valid: true, alias: "ROOT", certificateType: CertificateType.CA, issuerId: 1},
+      {id: 4, serialNumber: 1, issuedOn: 10, expiresOn: 20, subjectCN: "EE 1 1", valid: true, alias: "CA 1", certificateType: CertificateType.EE, issuerId: 2},
+      {id: 5, serialNumber: 1, issuedOn: 10, expiresOn: 20, subjectCN: "EE 1 2", valid: true, alias: "CA 1", certificateType: CertificateType.EE, issuerId: 2},
+      {id: 6, serialNumber: 1, issuedOn: 10, expiresOn: 20, subjectCN: "EE 2 1", valid: true, alias: "CA 2", certificateType: CertificateType.EE, issuerId: 3},
     ];
     return of(retVal);
   }
@@ -37,12 +37,17 @@ export class CertificateService {
     return this.http.get<Certificate>(url);
   }
 
+  deleteCertificate(id: number){
+    const url:string = `${this.apiUrl}/${id}`
+    return this.http.delete(url);
+  }
+
 
   createCertificateNode(cert: Certificate): CertificateNode{
-    if(cert.issuer){
-      return new CertificateNode(cert.id, cert.subject, cert.issuer.id);
+    if(cert.issuerId != 0){
+      return new CertificateNode(cert.id, cert.subjectCN, cert.issuerId, cert.certificateType);
     }
-    return new CertificateNode(cert.id, cert.subject, null);
+    return new CertificateNode(cert.id, cert.subjectCN, null, cert.certificateType);
   }
 
   getAllCSRs(): Observable<CSR[]>{
