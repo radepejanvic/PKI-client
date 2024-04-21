@@ -12,9 +12,10 @@ export class Certificate{
   issuerC?:string;
   issuerE?:string;
   valid:boolean;
-  alias?:string;
-  certificateType:CertificateType;
+  alias:string;
+  type:CertificateType;
   issuerId:number;
+  certificateAlias?:string;
 
   constructor(id: number, serialNumber: number, issuedOn: number, expiresOn: number, subject: string, valid: boolean, issuer: string, cert: CertificateType, issuerId: number) {
     this.id = id;
@@ -24,7 +25,7 @@ export class Certificate{
     this.subjectCN = subject;
     this.valid = valid;
     this.alias = issuer;
-    this.certificateType = cert;
+    this.type = cert;
     this.issuerId = issuerId;
   }
 }

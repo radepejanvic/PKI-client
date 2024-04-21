@@ -107,7 +107,7 @@ body {
 }
 
 .close-button {
-  width: 300px;
+  width: 120px;
   height: 40px;
   background-color: #dddddd;
   border-color: #dddddd;
@@ -118,7 +118,7 @@ body {
 }
 
 .close-button:hover {
-  width: 300px;
+  width: 120px;
   height: 40px;
   background-color: #ffffff;
   border-color: #dddddd;
@@ -194,7 +194,7 @@ body {
 
 .div-margin{
   background-color: #F6F8FA;
-  margin-top: 20px;
+  margin-bottom: 20px;
 }
 .div-margin-buttons{
   background-color: #F6F8FA;
@@ -225,7 +225,7 @@ body {
 #button-create{
   border:5px black;
   cursor: pointer;
-  font-size: 14px;
+  font-size: medium;
   background-color: #235471;
   color: #FFFF;
   border-radius: 5px;
@@ -239,7 +239,7 @@ body {
 #button-create:hover{
   border:5px black;
   cursor: pointer;
-  font-size: 14px;
+  font-size: medium;
   background-color: #137499;
   color: #FFFF;
   border-radius: 5px;
@@ -253,7 +253,7 @@ body {
 #button-save{
   border:5px black;
   cursor: pointer;
-  font-size: 14px;
+  font-size: medium;
   background-color: #235471;
   color: #FFFF;
   border-radius: 5px;
@@ -263,11 +263,14 @@ body {
   margin: 20px 0;
   filter: drop-shadow(0px 0.25px 0px rgba(0, 0, 0, 0.039));
 }
+.mat-checkbox-checked .mat-checkbox-background {
+  background-color: #235471 !important; /* Change to your desired color */
+}
 
 #button-save:hover{
   border:5px black;
   cursor: pointer;
-  font-size: 14px;
+  font-size: medium;
   background-color: #137499;
   color: #FFFF;
   border-radius: 5px;
@@ -295,6 +298,7 @@ input {
   font-weight: bold;
   font-size: large;
   margin-top: 20px;
+  margin-bottom: 50px;
 }
 
 mat-form-field{
