@@ -3,6 +3,8 @@ import {Observable, of} from "rxjs";
 import {Certificate} from "../model/certificate.model";
 import {HttpClient} from "@angular/common/http";
 import {CertificateNode} from "../model/certificate-node.nodel";
+import { environment } from 'src/env/env';
+import { CSR } from '../model/CSR.model';
 
 @Injectable({
   providedIn: 'root'
@@ -42,4 +44,20 @@ export class CertificateService {
     }
     return new CertificateNode(cert.id, cert.subject, null);
   }
+
+  getAllCSRs(): Observable<CSR[]>{
+    const url =  environment.apiHost + `csr`;
+    return this.http.get<CSR[]>(url);
+  }
+
+  acceptCSR(id: number): Observable<Certificate>{
+    const url = environment.apiHost + `certificates/${id}`;
+	  return this.http.post<Certificate>(url, {});
+  }
+
+  rejectCSR(id: number): Observable<boolean>{
+    const url =  environment.apiHost + `csr/${id}`;
+    return this.http.delete<boolean>(url);
+  }
+
 }

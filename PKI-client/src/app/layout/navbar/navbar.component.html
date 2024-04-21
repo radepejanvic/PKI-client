@@ -1,5 +1,8 @@
 <mat-toolbar>
+    <img [routerLink]="['/home']"   routerLinkActive="router-link-active" src="../../../assets/images/safebox-svgrepo-com.svg" alt="image">
     <div>
+        <a *ngIf="role != null" [routerLink]="['/cert-requests']" routerLinkActive="router-link-active">REQUESTS</a>
+        <a *ngIf="role != null" [routerLink]="['/cert-tree']" routerLinkActive="router-link-active" >CERTIFICATES</a>
         <a *ngIf="role != null" (click)="logOut()" >LOGOUT</a>
     </div>
 </mat-toolbar>
