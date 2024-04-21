@@ -20,12 +20,12 @@ export class CertificateService {
   // TEST DATA
   getAllCertificates1(): Observable<Certificate[]> {
     const retVal: Certificate[] = [
-      {id: 1, serialNumber: 1, issuedOn: 10, expiresOn: 20, subjectCN: "ROOT", valid: true, alias: "ROOT", certificateType: CertificateType.SS, issuerId: 0},
-      {id: 2, serialNumber: 1, issuedOn: 10, expiresOn: 20, subjectCN: "CA 1", valid: true, alias: "CA 1", certificateType: CertificateType.CA, issuerId: 1},
-      {id: 3, serialNumber: 1, issuedOn: 10, expiresOn: 20, subjectCN: "CA 2", valid: true, alias: "CA 2", certificateType: CertificateType.CA, issuerId: 1},
-      {id: 4, serialNumber: 1, issuedOn: 10, expiresOn: 20, subjectCN: "EE 1 1", valid: true, alias: "EE 1 1", certificateType: CertificateType.EE, issuerId: 2},
-      {id: 5, serialNumber: 1, issuedOn: 10, expiresOn: 20, subjectCN: "EE 1 2", valid: true, alias: "EE 1 2", certificateType: CertificateType.EE, issuerId: 2},
-      {id: 6, serialNumber: 1, issuedOn: 10, expiresOn: 20, subjectCN: "EE 2 1", valid: true, alias: "EE 2 1", certificateType: CertificateType.EE, issuerId: 3},
+      {id: 1, serialNumber: 1, issuedOn: 10, expiresOn: 20, subjectCN: "ROOT", valid: true, alias: "ROOT", type: CertificateType.SS, issuerId: 0},
+      {id: 2, serialNumber: 1, issuedOn: 10, expiresOn: 20, subjectCN: "CA 1", valid: true, alias: "CA 1", type: CertificateType.CA, issuerId: 1},
+      {id: 3, serialNumber: 1, issuedOn: 10, expiresOn: 20, subjectCN: "CA 2", valid: true, alias: "CA 2", type: CertificateType.CA, issuerId: 1},
+      {id: 4, serialNumber: 1, issuedOn: 10, expiresOn: 20, subjectCN: "EE 1 1", valid: true, alias: "EE 1 1", type: CertificateType.EE, issuerId: 2},
+      {id: 5, serialNumber: 1, issuedOn: 10, expiresOn: 20, subjectCN: "EE 1 2", valid: true, alias: "EE 1 2", type: CertificateType.EE, issuerId: 2},
+      {id: 6, serialNumber: 1, issuedOn: 10, expiresOn: 20, subjectCN: "EE 2 1", valid: true, alias: "EE 2 1", type: CertificateType.EE, issuerId: 3},
     ];
     return of(retVal);
   }
@@ -42,10 +42,10 @@ export class CertificateService {
 
 
   createCertificateNode(cert: Certificate): CertificateNode{
-    if(cert.issuerId != 0){
-      return new CertificateNode(cert.id, cert.alias, cert.issuerId, cert.certificateType);
+    if(cert.issuerId != null){
+      return new CertificateNode(cert.id, cert.certificateAlias!, cert.issuerId, cert.type);
     }
-    return new CertificateNode(cert.id, cert.alias, null, cert.certificateType);
+    return new CertificateNode(cert.id, cert.certificateAlias!, 0, cert.type);
   }
 
   getAllCSRs(): Observable<CSR[]>{

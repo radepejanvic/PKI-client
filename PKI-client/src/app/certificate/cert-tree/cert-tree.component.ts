@@ -75,15 +75,18 @@ export class CertTreeComponent  implements OnInit {
     const nodeMap = new Map<number, CertificateNode>();
     const tree: CertificateNode[] = [];
     for(const certNode of this.certNodes){
-      if(certNode.parent==1){
+      if(certNode.parent==0){
         console.log("PARENT ID: "+ certNode.parent)
         this.getById(certNode.parent)?.children.push(certNode);
         nodeMap.set(certNode.id, certNode);
       }
+      else if(certNode.parent){
+        nodeMap.set(certNode.id, certNode);
+      }
     }
     for (const node of this.certNodes) {
-      if (node.parent) {
-        const parentNode = nodeMap.get(this.getById(node.parent)?.id ?? -1);
+      if (node.parent != 0 && node.parent) {
+        const parentNode = nodeMap.get(this.getById(node.parent)?.id ?? 0);
         if (parentNode) {
           parentNode.children.push(node); // Add node as child of its parent
         }
@@ -106,6 +109,9 @@ export class CertTreeComponent  implements OnInit {
   getById(id: number): CertificateNode | undefined {
     for (let node of this.certNodes) {
       if (id == node.id) {
+        console.log("GET BY ID:")
+        console.log(node.alias)
+        console.log("xxxxxxxxxxx")
         return node;
       }
     }
@@ -124,7 +130,9 @@ export class CertTreeComponent  implements OnInit {
     this.createBy = null;
     this.certificateData = {
       id: node.id,
-      subject: node.alias,
+      alias: node.alias,
+      certificateType: node.certificateType,
+      issuer: this.getById(node.parent!)?.alias
     }
     this.cdr.detectChanges();
   }
@@ -184,17 +192,27 @@ export class CertTreeComponent  implements OnInit {
       if(this.createCertForm.value.certificateSigning){keyUsages.push(KeyUsage.KEY_CERT_SIGN)}
       if(this.createCertForm.value.encipherOnly){keyUsages.push(KeyUsage.ENCIPHER_ONLY)}
       const csr: CSR = {
+        id: -1,
+        publicKey: "",
         commonName: this.createCertForm.value.subjectCN?.trim() || "",
         organization: this.createCertForm.value.subjectO?.trim() || "",
         country: this.createCertForm.value.subjectC?.trim() || "",
         email: this.createCertForm.value.subjectE?.trim() || "",
         domainName: this.createCertForm.value.domain?.trim() || "",
         template: this.createCertForm.value.certType,
+        status: "APPROVED",
         keyUsages: keyUsages,
         subjectAlias: this.createCertForm.value.subjectAlias?.trim() || "",
         issuerAlias: this.createBy.alias
       }
-      this.certificateService.createCSR(csr);
+      console.log(csr);
+      this.certificateService.createCSR(csr).subscribe({
+      next: data => {
+          console.log(data);
+        }, error: err => {
+          console.error(err);
+        }
+      })
     }
   }
 

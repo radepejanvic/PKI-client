@@ -47,13 +47,16 @@
         <div class="certificate">
           <h2>Certificate {{certificateData.alias}}</h2>
           <div class="certificate-details">
-            <p><strong>Issued To:</strong><br>&nbsp;&nbsp;&nbsp;&nbsp; Entity Name</p>
-            <p><strong>Issued By:</strong><br>&nbsp;&nbsp;&nbsp;&nbsp; Issuer Name</p>
+            <p><strong>Issued To:</strong><br>&nbsp;&nbsp;&nbsp;&nbsp; {{certificateData.alias}}</p>
+            <p *ngIf="certificateData.issuer"><strong>Issued By:</strong><br>&nbsp;&nbsp;&nbsp;&nbsp; {{certificateData.issuer}}</p>
+            <p *ngIf="certificateData.issuer==null"><strong>Issued By:</strong><br>&nbsp;&nbsp;&nbsp;&nbsp; Self Signed</p>
+
             <br>
             <p><strong>Issued On:</strong><br>&nbsp;&nbsp;&nbsp;&nbsp; January 1, 2024</p>
             <p><strong>Expires On:</strong><br>&nbsp;&nbsp;&nbsp;&nbsp; January 1, 2025</p>
             <br>
             <p><strong>Certificate ID:</strong><br>&nbsp;&nbsp;&nbsp;&nbsp; {{certificateData.id}}</p>
+            <p><strong>Certificate Type:</strong><br>&nbsp;&nbsp;&nbsp;&nbsp; {{certificateData.certificateType}}</p>
           </div>
           <div class="buttons">
             <button class="delete-button" (click)="delete(certificateData)">Delete</button>
@@ -154,7 +157,7 @@
         </div>
         <div class="div-margin-buttons">
           <button class="save-create" id="button-save">Save</button>
-          <button class="save-create" type="submit" id="button-create">Create</button>
+          <button class="save-create" type="submit" id="button-create" (click)="onSubmit()">Create</button>
           <button class="close-button" (click)="back2()">Close</button>
         </div>
       </form>

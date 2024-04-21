@@ -10,16 +10,17 @@ export interface CSR{
     subjectAlias?: string;
     domainName?:string;
     keyUsages?:KeyUsage[];
+    status: string;
 }
 
 export enum KeyUsage{
-  ENCIPHER_ONLY = "Encipher Only",
-  CRL_SIGN = "CRL Signing",
-  KEY_CERT_SIGN = "Certificate Signing",
-  KEY_AGREEMENT = "Key Agreement",
-  DATA_ENCIPHERMENT = "Data Encipherment",
-  KEY_ENCIPHERMENT = "Key Encipherment",
-  NON_REPUDIATION = "Non-Repudiation",
-  DIGITAL_SIGNATURE = "Digital Signature",
-  DECIPHER_ONLY = "Decipher Only"
+  ENCIPHER_ONLY = "ENCIPHER_ONLY",
+  CRL_SIGN = "CRL_SIGN",
+  KEY_CERT_SIGN = "KEY_CERT_SIGN",
+  KEY_AGREEMENT = "KEY_AGREEMENT",
+  DATA_ENCIPHERMENT = "DATA_ENCIPHERMENT",
+  KEY_ENCIPHERMENT = "KEY_ENCIPHERMENT",
+  NON_REPUDIATION = "NON_REPUDIATION",
+  DIGITAL_SIGNATURE = "DIGITAL_SIGNATURE",
+  DECIPHER_ONLY = "DECIPHER_ONLY"
 }
