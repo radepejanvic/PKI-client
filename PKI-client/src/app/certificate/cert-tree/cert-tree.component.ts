@@ -126,7 +126,7 @@ export class CertTreeComponent  implements OnInit {
     this.cdr.detectChanges();
   }
 
-  onNodeClicked(node:CertificateNode){
+  onNodeClicked1(node:CertificateNode){
     this.createBy = null;
     this.certificateData = {
       id: node.id,
@@ -136,21 +136,26 @@ export class CertTreeComponent  implements OnInit {
     }
     this.cdr.detectChanges();
   }
-  onNodeClickedReal(id:number){
+  onNodeClicked(id:number){
     this.createBy = null;
     this.certificateService.getCertificateById(id).subscribe(
       (data) => {
+        console.log("PREEEEE")
         if(data){
+        console.log(data)
+
           this.certificateData = {
             id: data.id,
-            subjectCN: data.subjectCN,
-            issuedOn: data.issuedOn,
-            expiresOn: data.expiresOn,
+            alias: data.certificateAlias,
+            issuedOn: new Date(data.issuedOn),
+            expiresOn: new Date(data.expiresOn),
             valid: data.valid,
             issuerId: data.issuerId,
+            subjectCN: data.subjectCN,
             subjectC: data.subjectC,
             subjectE: data.subjectE,
-            subjectO: data.subjectO
+            subjectO: data.subjectO,
+            issuerAlias: data.issuerAlias
           }
         }
       });
@@ -173,13 +178,23 @@ export class CertTreeComponent  implements OnInit {
   }
 
   delete(node:CertificateNode){
-
+    console.log(node)
+    this.certificateService.deleteCertificate(node.id).subscribe({
+      next: data => {
+        console.log("deleted");
+        this.certNodes = [];
+        this.loadCertificates();
+        this.back2();
+        this.cdr.detectChanges();
+      }
+    });
+    
   }
   archive(node:CertificateNode){
 
   }
 
-  onSubmit(): void {
+  createCSR(): void {
     if(this.createCertForm.valid){
       const keyUsages: KeyUsage[] = [];
       if(this.createCertForm.value.crlSigning){keyUsages.push(KeyUsage.CRL_SIGN)}
@@ -209,6 +224,10 @@ export class CertTreeComponent  implements OnInit {
       this.certificateService.createCSR(csr).subscribe({
       next: data => {
           console.log(data);
+          this.certNodes = [];
+          this.loadCertificates();
+          this.cdr.detectChanges();
+          this.createCertForm.reset();
         }, error: err => {
           console.error(err);
         }

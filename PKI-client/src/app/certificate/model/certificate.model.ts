@@ -16,6 +16,7 @@ export class Certificate{
   type:CertificateType;
   issuerId:number;
   certificateAlias?:string;
+  issuerAlias?: string;
 
   constructor(id: number, serialNumber: number, issuedOn: number, expiresOn: number, subject: string, valid: boolean, issuer: string, cert: CertificateType, issuerId: number) {
     this.id = id;

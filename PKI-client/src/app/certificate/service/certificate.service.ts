@@ -31,7 +31,7 @@ export class CertificateService {
   }
 
   getCertificateById(id: number): Observable<Certificate> {
-    const url:string = `${environment.apiHost}certificates/${id}`
+    const url:string = `${environment.apiHost}certificates/cert/${id}`
     return this.http.get<Certificate>(url);
   }
 
